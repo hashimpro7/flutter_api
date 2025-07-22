@@ -1,92 +1,36 @@
-📱 **Flutter REST API Integration App**
-This is a simple Flutter application that fetches and displays data from a REST API using HTTP requests. It is designed to help beginners understand how to work with APIs in Flutter using http, FutureBuilder, and custom model classes.
+🧑‍💻 Flutter User Profile API App
 
-🚀 **Features**
-Fetches data from JSONPlaceholder API
-Parses JSON into Dart model objects
-Displays data in a scrollable ListView
-Uses FutureBuilder for async UI updates
-Clean and readable code structure
+This is a simple Flutter application that demonstrates how to fetch and display user profile data from a REST API using the `http` package.
 
-🧑‍💻 **Technologies Used**
-Flutter (SDK)
-Dart
-HTTP package
-JSONPlaceholder API for dummy data
+## 📱 Features
 
-📁 **Project Structure**
+- Fetches user data from a public API (`https://jsonplaceholder.typicode.com/users`)
+- Parses JSON data and displays it in a list
+- Reusable widget (`ReuseableRow`) for displaying individual user fields
+- Clean and responsive UI using Flutter widgets
+
+## 🗂️ Project Structure
+
 lib/
-├── Models/
-│   └── posts_api.dart        # Model class for the post data
-├── home_screen.dart          # Main screen with API fetching logic
-└── main.dart                 # App entry point
-
-🔧**How It Works**
-1. API Used
-This app fetches data from:
-🌐 https://jsonplaceholder.typicode.com/posts
-
-**2. Data Model**
-class PostsModel {
-  final num userId;
-  final num id;
-  final String title;
-  final String body;
-
-  PostsModel({required this.userId, required this.id, required this.title, required this.body});
-
-  factory PostsModel.fromJson(Map<String, dynamic> json) {
-    return PostsModel(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-    );
-  }
-}
+├── main.dart
+├── user_profile_screen.dart
+└── Models
 
 
-**3. API Call with http**
+### 📄 main.dart
 
-Future<List<PostsModel>> getPostApi() async {
-  final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+- Entry point of the Flutter application.
+- Initializes the app and sets `UserProfileScreen` as the home widget.
+- Applies a Material Theme with a purple color scheme.
 
-  if (response.statusCode == 200) {
-    var data = jsonDecode(response.body);
-    for (Map<String, dynamic> i in data) {
-      postList.add(PostsModel.fromJson(i));
-    }
-    return postList;
-  } else {
-    return [];
-  }
-}
-**4. Showing Data with FutureBuilder**
-FutureBuilder(
-  future: getPostApi(),
-  builder: (context, snapshot) {
-    if (!snapshot.hasData) {
-      return Text('Loading...');
-    } else {
-      return ListView.builder(
-        itemCount: postList.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              title: Text(postList[index].title),
-              subtitle: Text(postList[index].body),
-            ),
-          );
-        },
-      );
-    }
-  },
-)
+### 📄 user_profile_screen.dart
 
-🤝 **Contributing**
-Feel free to fork this repo and suggest improvements or add new features.
+- Defines a `UserProfileScreen` widget using `StatefulWidget`.
+- Uses the `http` package to perform a GET request to fetch user data.
+- Parses JSON and displays it in a scrollable list.
+- Contains a reusable widget `ReuseableRow` for rendering key-value user fields like name, username, email, and location.
 
-📬 **Contact**
-If you have any questions or want to connect:
-LinkedIn: https://www.linkedin.com/in/hashim-shahid-flutter-dev/
-Email: shahidhashim@gmail.com
+## 🔌 API Used
+
+- **Endpoint**: `https://jsonplaceholder.typicode.com/users`
+- This is a free fake REST API for testing and prototyping.
